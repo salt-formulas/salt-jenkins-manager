@@ -26,21 +26,22 @@ Usage
 - You need to prepare pillar to tell manager what to do. See files/pillar
   directory as an entry point.
 
-  - top.sls defines which pillars should be included on the node, it's up to
-    you if you want to have single big file or more smaller. By default, we
+  - ``top.sls`` defines which pillars should be included on the node, it's up
+    to you if you want to have single big file or more smaller. By default, we
     include ``jenkins/{master,jobs,credentials}.sls``.
 
 - Run container
 
-   .. code-block:: bash
+  .. code-block:: bash
 
-       docker run -it --rm=true -v `pwd`/files/pillar:/srv/pillar -e MASTER_HOST=my-jenkins.local genunix/salt-jenkins-manager
+      docker run -it --rm=true -v `pwd`/files/pillar:/srv/pillar -e MASTER_HOST=my-jenkins.local genunix/salt-jenkins-manager
 
+Environment variables
+---------------------
+Following environment variables are supported:
 
-   - Following environment variables are supported:
-
-     - MASTER_HOST (default 127.0.0.1)
-     - MASTER_PORT (default 80)
-     - MASTER_PROTOCOL (default http)
-     - MASTER_USER (default empty)
-     - MASTER_PASSWORD (default empty)
+- MASTER_HOST (default 127.0.0.1)
+- MASTER_PORT (default 80)
+- MASTER_PROTOCOL (default http)
+- MASTER_USER (default empty)
+- MASTER_PASSWORD (default empty)
