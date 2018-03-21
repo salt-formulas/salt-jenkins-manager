@@ -36,6 +36,7 @@ Usage
 
        docker run -it --rm=true -v `pwd`/files/pillar:/srv/pillar -e MASTER_HOST=my-jenkins.local genunix/salt-jenkins-manager
 
+
    - Following environment variables are supported:
 
      - MASTER_HOST (default 127.0.0.1)
