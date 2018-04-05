@@ -7,8 +7,8 @@
 MASTER_HOST=${MASTER_HOST:-127.0.0.1}
 MASTER_PORT=${MASTER_PORT:-80}
 MASTER_PROTOCOL=${MASTER_PROTOCOL:-http}
-MASTER_USER=""
-MASTER_PASSWORD=""
+MASTER_USER="${MASTER_USER:-}"
+MASTER_PASSWORD="${MASTER_USER:-}"
 
 ## Functions
 
@@ -32,10 +32,14 @@ if [[ $# -lt 1 ]] || [[ "$1" == "--"* ]]; then
 
     cat << EOF > /etc/salt/minion.d/jenkins.conf
 jenkins:
-  password: "${MASTER_PASSWORD}"
   url: ${MASTER_PROTOCOL}://${MASTER_HOST}:${MASTER_PORT}
-  user: "${MASTER_USER}"
 EOF
+
+    if [[ -n "$MASTER_USER" ]]; then
+        echo "user: ${MASTER_USER}" >> /etc/salt/minion.d/jenkins.conf
+        echo "password: ${MASTER_PASSWORD}" >> /etc/salt/minion.d/jenkins.conf
+    fi
+
     salt-call state.sls --retcode-passthrough jenkins.client
 else
     exec "$@"
