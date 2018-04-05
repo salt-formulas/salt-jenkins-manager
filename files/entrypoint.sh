@@ -4,7 +4,7 @@
 
 ## Overridable parameters
 
-MASTER_HOST="127.0.0.1"
+MASTER_HOST=${MASTER_HOST:-127.0.0.1}
 MASTER_PORT=${MASTER_PORT:-80}
 MASTER_PROTOCOL=${MASTER_PROTOCOL:-http}
 MASTER_USER=""
@@ -36,7 +36,7 @@ jenkins:
   url: ${MASTER_PROTOCOL}://${MASTER_HOST}:${MASTER_PORT}
   user: "${MASTER_USER}"
 EOF
-    salt-call state.sls jenkins.client
+    salt-call state.sls --retcode-passthrough jenkins.client
 else
     exec "$@"
 fi
