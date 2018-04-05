@@ -9,6 +9,9 @@ MASTER_PORT=${MASTER_PORT:-80}
 MASTER_PROTOCOL=${MASTER_PROTOCOL:-http}
 MASTER_USER="${MASTER_USER:-}"
 MASTER_PASSWORD="${MASTER_USER:-}"
+SALT_EXTRA_ARGS=${SALT_EXTRA_ARGS:-}
+
+[ ${DEBUG:-0} -ne 1 ] || SALT_EXTRA_ARGS="$SALT_EXTRA_ARGS -o debug"
 
 ## Functions
 
@@ -40,7 +43,8 @@ EOF
         echo "password: ${MASTER_PASSWORD}" >> /etc/salt/minion.d/jenkins.conf
     fi
 
-    salt-call state.sls --retcode-passthrough jenkins.client
+    [ ${DEBUG:-0} -ne 1 ] || salt-call pillar.data
+    salt-call state.sls $SALT_EXTRA_ARGS --retcode-passthrough jenkins.client
 else
     exec "$@"
 fi
