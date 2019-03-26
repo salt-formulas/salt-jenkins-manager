@@ -44,7 +44,7 @@ EOF
     fi
 
     [ ${DEBUG:-0} -ne 1 ] || salt-call pillar.data
-    salt-call state.sls $SALT_EXTRA_ARGS --retcode-passthrough jenkins.client
+    salt-call state.sls $SALT_EXTRA_ARGS --hard-crash --retcode-passthrough jenkins.client
 else
     exec "$@"
 fi
