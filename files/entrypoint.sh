@@ -7,6 +7,7 @@
 MASTER_HOST=${MASTER_HOST:-127.0.0.1}
 MASTER_PORT=${MASTER_PORT:-80}
 MASTER_PROTOCOL=${MASTER_PROTOCOL:-http}
+MASTER_PATH=${MASTER_PATH:-""}
 MASTER_USER="${MASTER_USER:-}"
 MASTER_PASSWORD="${MASTER_USER:-}"
 SALT_EXTRA_ARGS=${SALT_EXTRA_ARGS:-}
@@ -35,7 +36,7 @@ if [[ $# -lt 1 ]] || [[ "$1" == "--"* ]]; then
 
     cat << EOF > /etc/salt/minion.d/jenkins.conf
 jenkins:
-  url: ${MASTER_PROTOCOL}://${MASTER_HOST}:${MASTER_PORT}
+  url: ${MASTER_PROTOCOL}://${MASTER_HOST}:${MASTER_PORT}${MASTER_PATH}
 EOF
 
     if [[ -n "$MASTER_USER" ]]; then
